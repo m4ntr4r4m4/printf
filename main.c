@@ -13,8 +13,8 @@ int		main()
 	char 	n = '%';
 	char 	m = 'y';
 	
-	ft_printf("%d hello%% %s  %x  %c %p\n", 42, "my frind!", 42  ,'x', &c);
-	printf("%d hello%% %s %x %c %p\n", 42, "my frind!", 42 ,'x', &c);
+	ft_printf("%p hello %s %% %c end\n", &c, str, m);
+	printf("%p hello %s %% %c end\n", &c, str, m);
 //	ft_printf("%d%s%c%u\n", 42, "hello there", 'c', 42);
 	return (0);
 

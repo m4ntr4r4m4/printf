@@ -6,18 +6,22 @@
 /*   By: ahammoud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 11:41:47 by ahammoud          #+#    #+#             */
-/*   Updated: 2021/11/18 12:54:26 by ahammoud         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:52:37 by ahammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_putnbr_16(int nbr)
+void	ft_putnbr_16(long nbr, int	x)
 {
-	char	base[] = "0123456789abcdef";
-	int	i;
-	int	num[50];
+	char	*base;
+	long	i;
+	long	num[50];
 
 	i = 0;
+	if (x == 1)
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
 	if (nbr < 0)
 	{
 		nbr = nbr * -1;
