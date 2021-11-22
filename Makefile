@@ -6,13 +6,15 @@
 #    By: ahammoud <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 12:47:32 by ahammoud          #+#    #+#              #
-#    Updated: 2021/11/19 11:22:57 by ahammoud         ###   ########.fr        #
+#    Updated: 2021/11/22 02:05:20 by ahammoud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	= ft_printf.c \
-		  ./source/ft_putnbr16.c \
-
+SRCS	=	ft_printf.c \
+			ft_types.c \
+			./source/ft_putcharf.c \
+			./source/ft_putnbr_base.c \
+		  	./source/ft_putstrf.c \
 
 SRCSB	=
 
@@ -26,7 +28,7 @@ OBJSBN	=	${SRCSB:.c=.o}
 
 NAME	=	libftprintf.a 
 
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -glldb
 
 CC	=	gcc
 
@@ -49,6 +51,7 @@ clean	:
 
 fclean	:	clean
 			${RM} ${NAME}
+			${RM} ./source/libft/libft.a
 
 re		:	fclean all
 

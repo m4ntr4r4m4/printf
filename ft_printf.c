@@ -6,50 +6,51 @@
 /*   By: ahammoud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:42:11 by ahammoud          #+#    #+#             */
-/*   Updated: 2021/11/19 12:11:03 by ahammoud         ###   ########.fr       */
+/*   Updated: 2021/11/22 02:06:23 by ahammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static int	print(const char *format, int i, va_list args)
+static t_type	print(const char *format, t_type i, va_list args)
 {
-	if (format[i] == '%')
-		i++;
-	if (format[i] == '%' && format[i - 1] == '%')
-		ft_putchar_fd('%', 1);
-	if (format[i] == 'd' && format[i - 1] == '%')
-		ft_putnbr_fd(va_arg(args, int), 1);
-	if (format[i] == 's' && format[i - 1] == '%')
-		ft_putstr_fd(va_arg(args, char *), 1);
-	if (format[i] == 'c' && format[i - 1] == '%')
-		ft_putchar_fd(va_arg(args, int), 1);
-	if (format[i] == 'u' && format[i - 1] == '%')
-		ft_putnbr_fd(va_arg(args, unsigned int), 1);
-	if (format[i] == 'x' && format[i - 1] == '%')
-		ft_putnbr_16(va_arg(args, unsigned int), 1);
-	if (format[i] == 'X' && format[i - 1] == '%')
-		ft_putnbr_16(va_arg(args, unsigned int), 2);
-	if (format[i] == 'p' && format[i - 1] == '%')
-	{
-		ft_putstr_fd("0x", 1);
-		ft_putnbr_16(va_arg(args, unsigned long), 1);
-	}
+	i.i++;
+	if (format[i.i] == '%')
+		i.sum += ft_putcharf('%');
+	if (format[i.i] == 'd' || format[i.i] == 'i')
+		i = type_d(args, i);
+	if (format[i.i] == 'u')
+		i.sum += ft_putnbr_base(va_arg(args, \
+					unsigned int), 1, "0123456789");
+	if (format[i.i] == 's')
+		i = type_s(args, i);
+	if (format[i.i] == 'c')
+		i = type_c(args, i);
+	if (format[i.i] == 'x')
+		i.sum += ft_putnbr_base(va_arg(args, \
+					unsigned int), 1, "0123456789abcdef");
+	if (format[i.i] == 'X')
+		i.sum += ft_putnbr_base(va_arg(args, \
+					unsigned int), 1, "0123456789ABCDEF");
+	if (format[i.i] == 'p')
+		i = type_p(args, i);
 	return (i);
 }
 
 static int	check(const char *format, va_list args)
 {
-	int	i;
+	t_type	i;
 
-	i = 0;
-	while (format[i] != '\0')
+	i.i = 0;
+	i.sum = 0;
+	while (format[i.i] != '\0')
 	{
-		i = print(format, i, args);
-		i++;
-		if (format[i] != '%' && format[i] != '\0')
-			ft_putchar_fd(format[i], 1);
+		if (format[i.i] == '%')
+			i = print(format, i, args);
+		else
+			i.sum += ft_putcharf(format[i.i]);
+		i.i++;
 	}
-	return (0);
+	return (i.sum);
 }
 
 int	ft_printf(const char *format, ...)
@@ -61,5 +62,5 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	sum = check(format, args);
 	va_end(args);
-	return (0);
+	return (sum);
 }
