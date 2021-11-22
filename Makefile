@@ -6,7 +6,7 @@
 #    By: ahammoud <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 12:47:32 by ahammoud          #+#    #+#              #
-#    Updated: 2021/11/22 02:05:20 by ahammoud         ###   ########.fr        #
+#    Updated: 2021/11/22 08:11:11 by ahammoud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,14 @@ SRCS	=	ft_printf.c \
 			./source/ft_putnbr_base.c \
 		  	./source/ft_putstrf.c \
 
-SRCSB	=
-
 OBJS	=	${SRCS:.c=.o}
-
-OBJSBN	=	${SRCSB:.c=.o}
-
 
 .c.o	:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I includes/
 
 NAME	=	libftprintf.a 
 
-CFLAGS	=	-Wall -Werror -Wextra -glldb
+CFLAGS	=	-Wall -Werror -Wextra -glldb -Ofast -march=native -finline-functions
 
 CC	=	gcc
 
@@ -39,8 +34,6 @@ ${NAME}	:	${OBJS}
 			cp ./source/libft/libft.a ${NAME}
 			${AR}  ${NAME} ${OBJS}
 
-bonus	:	${OBJS} ${OBJSBN}
-		${AR}  ${NAME} ${OBJS} ${OBJSBN}
 all	:	${NAME}
 
 RM	=	rm -f
