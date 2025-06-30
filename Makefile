@@ -23,15 +23,15 @@ OBJS	=	${SRCS:.c=.o}
 
 NAME	=	libftprintf.a 
 
-CFLAGS	=	-Wall -Werror -Wextra -glldb -Ofast -march=native -finline-functions
+CFLAGS	=	-Wall -Werror -Wextra -g -pipe -Ofast -march=native -finline-functions
 
 CC	=	gcc
 
 AR	=	ar rcs
 
 ${NAME}	:	${OBJS}
-			cd ./source/libft/ && make
-			cp ./source/libft/libft.a ${NAME}
+			cd libft && make bonus
+			cp libft/libft.a ${NAME}
 			${AR}  ${NAME} ${OBJS}
 
 all	:	${NAME}
@@ -39,12 +39,12 @@ all	:	${NAME}
 RM	=	rm -f
 
 clean	:
-		${MAKE} clean -C ./source/libft
-		${RM} ${OBJS} ${OBJSBN}
+		${MAKE} clean -C libft
+		${RM} ${OBJS}
 
 fclean	:	clean
 			${RM} ${NAME}
-			${RM} ./source/libft/libft.a
+			${RM} libft/libft.a
 
 re		:	fclean all
 

@@ -20,7 +20,7 @@ int	ft_putstrf(char *s)
 		return (write(1, "(null)", 6));
 	while (s[i] != '\0')
 	{
-		write(1, &s[i], 1);
+       (void)write(1, &s[i], 1);
 		i++;
 	}
 	return (i);

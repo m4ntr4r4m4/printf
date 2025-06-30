@@ -10,7 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdarg.h>
 #include "ft_printf.h"
+typedef struct t_type
+{
+    int i;
+    int sum;
+} t_type;
 
 t_type	type_d(va_list args, t_type i)
 {

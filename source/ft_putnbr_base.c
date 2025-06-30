@@ -18,11 +18,6 @@ int	ft_putnbr_base(unsigned long long num, int fd, char *base)
 
 	len = ft_strlen(base);
 	i = 0;
-	if (num < 0)
-	{
-		ft_putchar_fd('-', fd);
-		num = -num;
-	}
 	if (num >= (unsigned long long)len)
 		 i += ft_putnbr_base(num / len, fd, base);
 	ft_putchar_fd(base[(num % len)], fd);

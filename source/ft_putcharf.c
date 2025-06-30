@@ -13,6 +13,6 @@
 
 int	ft_putcharf(int c)
 {
-	write(1, &c, 1);
+   (void)write(1, &c, 1);
 	return (1);
 }
