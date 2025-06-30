@@ -11,10 +11,13 @@
 # **************************************************************************** #
 
 SRCS	=	ft_printf.c \
-			ft_types.c \
-			./source/ft_putcharf.c \
-			./source/ft_putnbr_base.c \
-		  	./source/ft_putstrf.c \
+	parser.c \
+	utils.c \
+	handlers_char_str.c \
+	handlers_num.c \
+	handlers_hex_ptr.c \
+	source/ft_putcharf.c \
+	source/ft_putstrf.c
 
 OBJS	=	${SRCS:.c=.o}
 
@@ -23,15 +26,15 @@ OBJS	=	${SRCS:.c=.o}
 
 NAME	=	libftprintf.a 
 
-CFLAGS	=	-Wall -Werror -Wextra -g -pipe -Ofast -march=native -finline-functions
+CFLAGS	=	-Wall -Werror -Wextra -g -pipe  -march=native -finline-functions
 
 CC	=	gcc
 
 AR	=	ar rcs
 
 ${NAME}	:	${OBJS}
-			cd libft && make bonus
-			cp libft/libft.a ${NAME}
+			cd source/libft && make bonus
+			cp source/libft/libft.a ${NAME}
 			${AR}  ${NAME} ${OBJS}
 
 all	:	${NAME}
