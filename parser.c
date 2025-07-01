@@ -6,70 +6,81 @@
 /*   By: m4ntr4 <m4ntr4@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 00:00:00 by m4ntr4            #+#    #+#             */
-/*   Updated: 2025/07/01 00:00:00 by m4ntr4            ###   ########.fr       */
+/*   Updated: 2025/07/01 04:57:41 by ahammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-	#include "ft_printf.h"
+#include "ft_printf.h"
 
-	static void	init_format(t_format *f)
-	{
-		f->flags_minus = 0;
-		f->flags_zero = 0;
-		f->flags_hash = 0;
-		f->flags_space = 0;
-		f->flags_plus = 0;
-		f->width = 0;
-		f->precision = -1;
-		f->specifier = 0;
-		f->sign = 0;
-	}
+static void	init_format(t_format *f)
+{
+	f->flags_minus = 0;
+	f->flags_zero = 0;
+	f->flags_hash = 0;
+	f->flags_space = 0;
+	f->flags_plus = 0;
+	f->width = 0;
+	f->precision = -1;
+	f->specifier = 0;
+	f->sign = 0;
+}
 
-	static void	parse_flags(const char *fmt, int *i, t_format *f)
-	{
-		while (fmt[*i] == '-' || fmt[*i] == '0' || fmt[*i] == '#' ||
-		       fmt[*i] == ' ' || fmt[*i] == '+')
-		{
-			if (fmt[*i] == '-')
-				f->flags_minus = 1;
-			else if (fmt[*i] == '0')
-				f->flags_zero = 1;
-			else if (fmt[*i] == '#')
-				f->flags_hash = 1;
-			else if (fmt[*i] == ' ')
-				f->flags_space = 1;
-			else if (fmt[*i] == '+')
-				f->flags_plus = 1;
-			(*i)++;
-		}
-	}
+static int	ft_check_flags(const char *fmt, int *i)
+{
+	int	x;
 
-	static void	parse_width(const char *fmt, int *i, t_format *f)
-	{
-		if (fmt[*i] >= '0' && fmt[*i] <= '9')
-		{
-			f->width = 0;
-			while (fmt[*i] >= '0' && fmt[*i] <= '9')
-				f->width = f->width * 10 + (fmt[(*i)++] - '0');
-		}
-	}
+	x = 0;
+	if (fmt[*i] == '-' || fmt[*i] == '0' )
+		x = 1;
+	if (fmt[*i] == '#' || fmt[*i] == ' ' || fmt[*i] == '+')
+		x = 1;
+	return (x);
+}
 
-	static void	parse_precision(const char *fmt, int *i, t_format *f)
+static void	parse_flags(const char *fmt, int *i, t_format *f)
+{
+	while (ft_check_flags(fmt, i))
 	{
-		if (fmt[*i] == '.')
-		{
-			(*i)++;
-			f->precision = 0;
-			while (fmt[*i] >= '0' && fmt[*i] <= '9')
-				f->precision = f->precision * 10 + (fmt[(*i)++] - '0');
-		}
-	}
-
-	void	parse_format(const char *fmt, int *i, t_format *f)
-	{
-		init_format(f);
+		if (fmt[*i] == '-')
+			f->flags_minus = 1;
+		else if (fmt[*i] == '0')
+			f->flags_zero = 1;
+		else if (fmt[*i] == '#')
+			f->flags_hash = 1;
+		else if (fmt[*i] == ' ')
+			f->flags_space = 1;
+		else if (fmt[*i] == '+')
+			f->flags_plus = 1;
 		(*i)++;
-		parse_flags(fmt, i, f);
-		parse_width(fmt, i, f);
-		parse_precision(fmt, i, f);
-		f->specifier = fmt[*i];
 	}
+}
+
+static void	parse_width(const char *fmt, int *i, t_format *f)
+{
+	if (fmt[*i] >= '0' && fmt[*i] <= '9')
+	{
+		f->width = 0;
+		while (fmt[*i] >= '0' && fmt[*i] <= '9')
+			f->width = f->width * 10 + (fmt[(*i)++] - '0');
+	}
+}
+
+static void	parse_precision(const char *fmt, int *i, t_format *f)
+{
+	if (fmt[*i] == '.')
+	{
+		(*i)++;
+		f->precision = 0;
+		while (fmt[*i] >= '0' && fmt[*i] <= '9')
+			f->precision = f->precision * 10 + (fmt[(*i)++] - '0');
+	}
+}
+
+void	parse_format(const char *fmt, int *i, t_format *f)
+{
+	init_format(f);
+	(*i)++;
+	parse_flags(fmt, i, f);
+	parse_width(fmt, i, f);
+	parse_precision(fmt, i, f);
+	f->specifier = fmt[*i];
+}
