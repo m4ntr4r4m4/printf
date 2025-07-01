@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putstrf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahammoud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: m4ntr4 <m4ntr4@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 16:28:52 by ahammoud          #+#    #+#             */
-/*   Updated: 2021/11/22 01:52:31 by ahammoud         ###   ########.fr       */
+/*   Created: 2025/07/01 00:00:00 by m4ntr4            #+#    #+#             */
+/*   Updated: 2025/07/01 00:00:00 by m4ntr4            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "ft_printf.h"
 
 int	ft_putstrf(char *s)
 {
-	int	i;
+   int i;
 
-	i = 0;
-	if (!s)
-		return (write(1, "(null)", 6));
-	while (s[i] != '\0')
-	{
+   i = 0;
+   if (s == NULL)
+       return (write(1, "(null)", 6));
+   while (s[i] != '\0')
+   {
        (void)write(1, &s[i], 1);
-		i++;
-	}
-	return (i);
+       i++;
+   }
+   return (i);
 }

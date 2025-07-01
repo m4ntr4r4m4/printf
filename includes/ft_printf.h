@@ -3,7 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   Updated for bonus implementation                           :+:      :+:    :+:   */
+/*   By: m4ntr4 <m4ntr4@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/01 00:00:00 by m4ntr4            #+#    #+#             */
+/*   Updated: 2025/07/01 00:00:00 by m4ntr4            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
@@ -22,10 +25,11 @@ typedef struct s_format
     int width;
     int precision;
     char specifier;
+    char sign;
 } t_format;
 
 int ft_printf(const char *format, ...);
-int ft_putcharf(char c);
+int ft_putcharf(int c);
 int ft_putstrf(char *s);
 int ft_putnbr_base(unsigned long long num, int fd, char *base);
 char *utoa_base(unsigned long long num, const char *base);
