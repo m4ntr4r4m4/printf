@@ -1,0 +1,16 @@
+# Vendored dependency (cloned by the Makefile)
+source/libft/
+
+# Build artifacts
+*.o
+*.a
+*.gch
+
+# Archives
+*.tar
+
+# Static analysis output
+clang-analyzer-report/
+
+# macOS
+.DS_Store

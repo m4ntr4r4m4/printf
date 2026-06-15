@@ -22,6 +22,9 @@ SRCS	=	ft_printf.c \
 
 OBJS	=	${SRCS:.c=.o}
 
+# Keep `make` (no target) building the library, not the libft-clone rule below
+.DEFAULT_GOAL := all
+
 .c.o	:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I includes/
 
@@ -33,9 +36,19 @@ CC	=	gcc
 
 AR	=	ar rcs
 
-${NAME}	:	${OBJS}
-			cd source/libft && make bonus
-			cp source/libft/libft.a ${NAME}
+LIBFT_DIR	=	source/libft
+
+LIBFT_REPO	=	git@github.com:m4ntr4r4m4/libft.git
+
+# Fetch libft on demand if it is not already present
+$(LIBFT_DIR)/Makefile	:
+	@echo "libft not found - cloning from $(LIBFT_REPO)"
+	@rm -rf $(LIBFT_DIR)
+	git clone $(LIBFT_REPO) $(LIBFT_DIR)
+
+${NAME}	:	$(LIBFT_DIR)/Makefile ${OBJS}
+			${MAKE} -C $(LIBFT_DIR) bonus
+			cp $(LIBFT_DIR)/libft.a ${NAME}
 			${AR}  ${NAME} ${OBJS}
 
 all	:	${NAME}
@@ -44,12 +57,12 @@ bonus	:	${NAME}
 RM	=	rm -f
 
 clean	:
-		${MAKE} clean -C source/libft
+		@if [ -f $(LIBFT_DIR)/Makefile ]; then ${MAKE} clean -C $(LIBFT_DIR); fi
 		${RM} ${OBJS}
 
 fclean	:	clean
 			${RM} ${NAME}
-			${RM} source/libft/libft.a
+			${RM} $(LIBFT_DIR)/libft.a
 
 re		:	fclean all
 
